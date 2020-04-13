@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "open public/index.html"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.4"
+  }
+}
