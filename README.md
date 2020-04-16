@@ -10,3 +10,8 @@ The text shadow is cast along the angle between the text and the mouse.
 npm start
 ```
 
+### To test:
+
+```
+npm run test
+```
