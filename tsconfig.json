@@ -1,0 +1,10 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "ES2015",
+    "lib": ["ES2015", "DOM", "ES2018.regexp"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

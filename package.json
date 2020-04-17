@@ -1,9 +1,12 @@
 {
   "scripts": {
+    "dev": "tsc --watch",
     "start": "open public/index.html",
-    "test": "open test/index.test.html"
+    "test": "open index.test.html",
+    "typescript": "tsc"
   },
   "devDependencies": {
-    "prettier": "^2.0.4"
+    "prettier": "^2.0.4",
+    "typescript": "^3.8.3"
   }
 }

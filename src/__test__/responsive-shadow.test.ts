@@ -2,12 +2,12 @@ const testResponsiveShadowTextClass = async () => {
   document.body.style.margin = '0px';
   const testConstructor = async () => {
     const tests = [
-      () => {
+      (): TestResult => {
         const element = document.createElement('div');
         document.body.prepend(element);
         const shadowInterface = new ResponsiveShadowText(element, 10);
 
-        let result = { status: 'success' };
+        let result: TestResult = { status: 'success' };
         if (shadowInterface.element !== element) {
           result = {
             status: 'failure',
@@ -25,12 +25,12 @@ const testResponsiveShadowTextClass = async () => {
       },
 
       // default radius
-      () => {
+      (): TestResult => {
         const element = document.createElement('p');
         document.body.prepend(element);
         const shadowInterface = new ResponsiveShadowText(element);
 
-        let result = { status: 'success' };
+        let result: TestResult = { status: 'success' };
         if (shadowInterface.shadowRadius !== 6) {
           result = {
             status: 'failure',
@@ -60,7 +60,7 @@ const testResponsiveShadowTextClass = async () => {
 
     const [centerX, centerY] = shadowInterface.centerPoint;
 
-    let result = { status: 'success' };
+    let result: TestResult = { status: 'success' };
     if (centerX !== 160) {
       result = {
         status: 'failure',
@@ -89,7 +89,7 @@ const testResponsiveShadowTextClass = async () => {
 
     const { textShadow } = element.style;
 
-    let result = { status: 'success' };
+    let result: TestResult = { status: 'success' };
     if (!/ -2px -3px 0/.test(textShadow)) {
       result = {
         status: 'failure',
@@ -114,7 +114,7 @@ const testResponsiveShadowTextClass = async () => {
     const pattern = '-?\\d+(.\\d+)?(e-\\d+)?'; // positive or negative integers or decimal numers including scientific notation
     const re = new RegExp(`(?<h>${pattern})(px)? (?<v>${pattern})(px)?`);
 
-    const mouseMoves = async () => {
+    const mouseMoves = async (): Promise<TestResult> => {
       // move right of text
       const eventRight = new MouseEvent('mousemove', {
         clientX: 300,
@@ -126,6 +126,12 @@ const testResponsiveShadowTextClass = async () => {
       await wait(8);
 
       let { textShadow } = element.style;
+      if (!textShadow) {
+        return {
+          status: 'failure',
+          message: `Expected text shadow to exist after mouse move, but it does not.`
+        };
+      }
       let { h, v } = textShadow.match(re).groups;
 
       // h and v as numbers should be approximately correct
@@ -150,6 +156,12 @@ const testResponsiveShadowTextClass = async () => {
       await wait(8);
 
       ({ textShadow } = element.style);
+      if (!textShadow) {
+        return {
+          status: 'failure',
+          message: `Expected text shadow to exist after mouse move, but it does not.`
+        };
+      }
       ({ h, v } = textShadow.match(re).groups);
 
       // h and v as numbers should be approximately correct
@@ -174,6 +186,12 @@ const testResponsiveShadowTextClass = async () => {
       await wait(8);
 
       ({ textShadow } = element.style);
+      if (!textShadow) {
+        return {
+          status: 'failure',
+          message: `Expected text shadow to exist after mouse move, but it does not.`
+        };
+      }
       ({ h, v } = textShadow.match(re).groups);
 
       // h and v as numbers should be approximately correct
@@ -198,6 +216,12 @@ const testResponsiveShadowTextClass = async () => {
       await wait(8);
 
       ({ textShadow } = element.style);
+      if (!textShadow) {
+        return {
+          status: 'failure',
+          message: `Expected text shadow to exist after mouse move, but it does not`
+        };
+      }
       ({ h, v } = textShadow.match(re).groups);
 
       // h and v as numbers should be approximately correct
@@ -234,9 +258,9 @@ const testResponsiveShadowTextClass = async () => {
 
     await wait(8);
 
-    ({ textShadow } = element.style);
+    const { textShadow } = element.style;
 
-    let result = { status: 'success' };
+    let result: TestResult = { status: 'success' };
     if (textShadow) {
       result = {
         status: 'failure',
@@ -248,7 +272,7 @@ const testResponsiveShadowTextClass = async () => {
     return { title: 'removeListener', results: [result] };
   };
 
-  const results = [
+  const results: { title: string; results: TestResult[] }[] = [
     await testConstructor(),
     testCenterPoint(),
     testUpdateShadow(),

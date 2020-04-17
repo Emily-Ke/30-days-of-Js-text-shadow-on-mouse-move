@@ -3,12 +3,16 @@
  * position in the document.
  */
 class ResponsiveShadowText {
+  element: HTMLElement;
+  shadowRadius: number;
+  debouncedHandleMouseMove: (e: MouseEvent) => void;
+
   /**
    * Constructs the responsive shadow and adds listener for mousemove
    * @param {HTMLElement} el the rendered element to apply the shadow to
    * @param {number} shadowRadius maximum x or y text shadow offset
    */
-  constructor(el, shadowRadius = 6) {
+  constructor(el: HTMLElement, shadowRadius: number = 6) {
     this.element = el;
     this.shadowRadius = shadowRadius;
 
@@ -31,7 +35,7 @@ class ResponsiveShadowText {
    * @param {number} offsetX horizontal shadow offset in px, positive positions shadow to the right
    * @param {number} offsetY vertical shadow offset in px, positive positions shadow below
    */
-  updateShadow(offsetX, offsetY) {
+  updateShadow(offsetX: number, offsetY: number) {
     this.element.style.textShadow = `${offsetX}px ${offsetY}px 0 rgba(0, 0, 0, 0.2)`;
   }
 
@@ -39,7 +43,7 @@ class ResponsiveShadowText {
    * Orients element's text shadow based on mouse position
    * @param {MouseEvent} e mouse event
    */
-  handleMouseMove(e) {
+  handleMouseMove(e: MouseEvent) {
     const { clientX: mouseX, clientY: mouseY } = e;
     const [textCenterX, textCenterY] = this.centerPoint;
 

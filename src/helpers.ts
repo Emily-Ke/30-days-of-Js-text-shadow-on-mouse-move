@@ -3,9 +3,9 @@
  * @param {Function} fn function to debounce
  * @param {number} [wait=20] milliseconds to wait before executing `fn`
  */
-const debounce = (fn, wait = 20) => {
+const debounce = (fn: Function, wait: number = 20) => {
   let timeout = 0;
-  return (...args) => {
+  return (...args: any[]) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => fn(...args), wait);
   };
@@ -16,7 +16,10 @@ const debounce = (fn, wait = 20) => {
  * @param {[number, number]} point1 point from
  * @param {[number, number]} point2 point to
  */
-const angleBetweenTwoPoints = (point1, point2) => {
+const angleBetweenTwoPoints = (
+  point1: [number, number],
+  point2: [number, number]
+) => {
   const [p1x, p1y] = point1;
   const [p2x, p2y] = point2;
   const dx = p2x - p1x;
@@ -30,17 +33,17 @@ const angleBetweenTwoPoints = (point1, point2) => {
  * @param {number} angle angle in radians between hypotenuse and adjacent side
  * @param {number} hypotenuse hypotenuse of the right triangle
  */
-const sides = (angle, hypotenuse) => {
+const sides = (angle: number, hypotenuse: number) => {
   const adjacent = hypotenuse * Math.cos(angle);
   const opposite = hypotenuse * Math.sin(angle);
   return [adjacent, opposite];
 };
 
 /**
- * An interface to pause code execution for `time` milliseconds
+ * Returns a Promist that enables pausing code execution for `time` milliseconds
  * @param {number} [time=0] milliseconds to wait before resolving promise
  */
-const wait = (time = 0) =>
+const wait = (time: number = 0) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve(true);
@@ -52,7 +55,7 @@ const wait = (time = 0) =>
  * @param {number} number the number to round
  * @param {number} precision the number of digits after the decimal to round to
  */
-const round = (number, precision = 1) => {
+const round = (number: number, precision: number = 1) => {
   const factor = 10 ** precision;
   return Math.round(number * factor) / factor;
 };
